@@ -1,5 +1,6 @@
 "use client"
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import CardList from '../component/cardList';
 
 const data = [
@@ -38,10 +39,15 @@ const data = [
 
 export default function Home() {
   return (
-    <div style={{ textAlign: 'center', margin: '20px' }}>
+    <div style={{ textAlign: 'center', margin: '10px' }}>
       <Typography variant="h2" component="h1" gutterBottom>
         Hate, Constructive Criticism
       </Typography>
+      <button className="bg-blue-500 text-white py-2 px-4 border-none rounded cursor-pointer my-5 text-base transition-colors duration-200 hover:bg-blue-600">
+        Create
+      </button>
+
+
       <CardList items={data} />
     </div>
   );
