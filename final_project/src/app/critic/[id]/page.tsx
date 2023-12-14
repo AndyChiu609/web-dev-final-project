@@ -1,28 +1,45 @@
-"use client"
+'use client';
 
-
-import { useRouter } from 'next/router';
+import React from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import Typography from '@material-ui/core/Typography';
 
 const CriticPage = () => {
-  const router = useRouter();
+  const pathname = usePathname();
 
-  // Ensure the router is ready before trying to access query parameters
-  const id = router.isReady ? router.query.id : null;
+  // Log the pathname to see what's being returned
+  console.log('Encoded pathname:', pathname);
 
-  // Check if 'id' is a string and cast it to string type if it is not null or undefined
-  const title = typeof id === 'string' ? id : '';
+  // Decode the pathname to get the actual path
+  const decodedPathname = decodeURIComponent(pathname);
 
-  // Placeholder content
+  // Log the decoded pathname to verify it's correct
+  console.log('Decoded pathname:', decodedPathname);
+
+  // Extract the ID from the decoded pathname
+  const id = decodedPathname.split('/')[2]; // Adjust the index based on your routing structure
+
+  // Log the extracted 'id' to see what's being captured
+  console.log('Extracted id:', id);
+
+  // Placeholder content for when 'id' is found
   const content = {
-    title: title,
-    description: "This is a placeholder description."
+    title: `Critic Page: ${id}`,
+    description: "This is a placeholder description for the critic page."
   };
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>{content.title}</h1>
-      <p>{content.description}</p>
-      {/* Other content */}
+      <Typography variant="h4" component="h1" gutterBottom>
+        {content.title}
+      </Typography>
+      <Typography variant="body1">
+        {content.description}
+      </Typography>
+      <Link href="/" legacyBehavior>
+        <a>Back to Home</a>
+      </Link>
     </div>
   );
 };
