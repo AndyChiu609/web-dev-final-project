@@ -1,6 +1,6 @@
 import { date, index, pgTable, serial, uuid, varchar } from "drizzle-orm/pg-core";
 
-export const cardsTable = pgTable("crads",{
+export const cardsTable = pgTable("cards",{
     id:serial("id").primaryKey(),
     displayId:uuid("display_id").defaultRandom().notNull().unique(),
     title: varchar("title",{length:50}).notNull(),
