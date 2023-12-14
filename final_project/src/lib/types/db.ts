@@ -5,3 +5,8 @@ export type Card = {
     imageUrl?:string;
     date: string;
 }
+
+export type Message = {
+    role: "user"| "system"| "assistant";
+    content: string| null;
+}
