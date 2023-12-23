@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
@@ -80,6 +80,8 @@ export default function Home() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [cards, setCards] = useState<CardItem[]>([]);
+  const [refreshFlag, setRefreshFlag] = useState(false); // 新增的狀態
 
 
   const handleOpen = () => setOpen(true);
@@ -112,7 +114,26 @@ export default function Home() {
     } catch (error) {
       console.error('Error:', error);
     }
+
+    setRefreshFlag(!refreshFlag);
   };
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch('/api/card'); // 替換為您的 "get all cards" API 端點
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setCards(data.cards); // 假設返回的數據是 { cards: CardItem[] }
+      } catch (error) {
+        console.error('Error fetching cards:', error);
+      }
+    };
+
+    fetchCards();
+  }, [refreshFlag]);
 
   return (
     <div style={{ textAlign: 'center', margin: '10px' }}>
@@ -170,7 +191,7 @@ export default function Home() {
         </Box>
       </Modal>
 
-      <CardList items={data} />
+      <CardList items={cards} />
     </div>
   );
 }

@@ -50,3 +50,30 @@ export async function POST(
       );
     }
   }
+
+  export async function GET(req: NextRequest) {
+    try {
+        const dbCards = await db.query.cardsTable.findMany();
+
+        if (!dbCards || dbCards.length === 0) {
+            console.log("[api-card] error: no cards found");
+            return NextResponse.json({ error: "No cards found" }, { status: 404 });
+        }
+
+        return NextResponse.json({
+            cards: dbCards.map(dbCard => ({
+                id: dbCard.displayId,
+                title: dbCard.title,
+                content: dbCard.content,
+                imageUrl: dbCard.imageUrl,
+                date: dbCard.date,
+            }))
+        }, { status: 200 });
+    } catch (error) {
+        console.log("[api-card] error: Internal Server Error", error);
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
+}
