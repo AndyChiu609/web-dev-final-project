@@ -1,7 +1,13 @@
 "use client"
+import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
 import CardList from '../component/cardList';
+
+
 
 type CardItem = {
   title: string;
@@ -47,18 +53,122 @@ const data: CardItem[] = [  {
   // ... your data items
 ];
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
+function isValidUrl(string: string): boolean {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
 
 export default function Home() {
+
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSubmit = async () => {
+    if (imageUrl && !isValidUrl(imageUrl)) {
+      alert('Please enter a valid URL for the image.');
+      return;
+    }
+
+
+    try {
+      const response = await fetch('/api/card', { // 替換為您的 API 端點
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, content, imageUrl }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      // 處理響應數據
+      const data = await response.json();
+      console.log('Response data:', data);
+      handleClose(); // 關閉模態框
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div style={{ textAlign: 'center', margin: '10px' }}>
       <Typography variant="h2" component="h1" gutterBottom>
         Hate, Constructive Criticism
       </Typography>
-      <button className="bg-blue-500 text-white py-2 px-4 border-none rounded cursor-pointer my-5 text-base transition-colors duration-200 hover:bg-blue-600">
+      <Button variant="contained" color="primary" onClick={handleOpen}>
         Create
-      </button>
+      </Button>
 
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Modal Title
+          </Typography>
+          <TextField
+            label="Title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <TextField
+            label="Description"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+              <TextField
+            label="Image URL"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+          
+          
+          <div style={{ marginTop: '16px' }}>
+            <Button variant="contained" color="primary" onClick={handleSubmit} style={{ marginRight: '10px' }}>
+              Create
+            </Button>
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+          </div>
+        </Box>
+      </Modal>
 
       <CardList items={data} />
     </div>

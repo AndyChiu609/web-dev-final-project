@@ -28,7 +28,7 @@ const CardList: React.FC<CardListProps> = ({ items }) => {
       gap: '20px'
     }}>
       {items.map((item, index) => (
-        <Link key={index} href={`/critic/${encodeURIComponent(item.title)}`} passHref>
+        <Link key={index} href={`/critic/${item.title}`} passHref>
           <Card sx={{ 
             flex: '1 0 21%',
             maxWidth: '345px',

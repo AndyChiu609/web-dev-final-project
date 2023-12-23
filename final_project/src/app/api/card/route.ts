@@ -18,7 +18,7 @@ export async function POST(
     try{
       POSTCardsTableSchema.parse(data)
     }catch(error) {
-      console.log("[api-card] error: Invalid request")
+      console.error("[api-card] error: Invalid request", error)
       return NextResponse.json({ error: "Invalid request"}, {status:400})
     }
   

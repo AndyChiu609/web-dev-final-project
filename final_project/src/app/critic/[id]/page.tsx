@@ -4,6 +4,8 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 
 const CriticPage = () => {
   const pathname = usePathname();
@@ -38,7 +40,9 @@ const CriticPage = () => {
         {content.description}
       </Typography>
       <Link href="/" legacyBehavior>
-        <a>Back to Home</a>
+      <button className="m-t-4 bgblue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Back to Home
+      </button>
       </Link>
     </div>
   );
