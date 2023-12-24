@@ -3,15 +3,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-
-// 定義卡片數據的接口
-interface CardItem {
-  title: string;
-  description: string;
-  imageUrl: string;
-}
+import { CardItem } from '@/lib/types/db';
+import Link from 'next/link';
 
 // 定義 CardList 組件的 props 類型
 interface CardListProps {
@@ -28,7 +22,7 @@ const CardList: React.FC<CardListProps> = ({ items }) => {
       gap: '20px'
     }}>
       {items.map((item, index) => (
-        <Link key={index} href={`/critic/${item.title}`} passHref>
+        <Link key={index} href={`/critic/${item.id}`}>
           <Card sx={{ 
             flex: '1 0 21%',
             maxWidth: '345px',

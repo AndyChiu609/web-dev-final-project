@@ -1,7 +1,7 @@
-export type Card = {
+export type CardItem = {
     id: string;
     title: string;
-    content: string;
+    description: string;
     imageUrl?:string;
     date: string;
 }
