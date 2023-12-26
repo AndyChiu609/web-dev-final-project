@@ -6,7 +6,6 @@ export const useCard = () => {
   const {cardId} = useParams()
   const cardItemId = Array.isArray(cardId) ? cardId[0]: cardId;
   const [cardItem, setCardItem] = useState<CardItem|null>(null);
-  console.log(cardId)
   const router = useRouter();
 
   useEffect(() => {

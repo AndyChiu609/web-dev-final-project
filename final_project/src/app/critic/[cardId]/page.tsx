@@ -1,20 +1,19 @@
 'use client';
 
-import React from 'react';
-import { redirect, usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextInput from './_component/TextInput';
 import { useCard } from '@/hooks/useCard';
+import Form from './_component/Form';
+import { redirect } from 'next/navigation';
 
 
 function CriticPage() {
-  const {cardItemId, cardItem} = useCard()
+  const {cardItem} = useCard()
   if(!cardItem){
     // alert("Page not found")
     // redirect('/')
-    return <></>;
+    return <></>
   }
   return (
     <div style={{ padding: '20px' }}>
@@ -29,10 +28,7 @@ function CriticPage() {
           Back to Home
       </button>
       </Link>
-
-      <div>
-        <TextInput />
-      </div>
+      <Form />
     </div>
   );
 };
