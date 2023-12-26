@@ -9,7 +9,7 @@ import TextContent from "./TextContent";
 
 export default function Form() {
   const [onType, setOnType] = useState(false);
-  const [content, setContent] = useState("try to type something...");
+  const [content, setContent] = useState("click to type something...");
   const [review, setReview] = useState(null);
   const {cardItemId} = useCard();
   const {

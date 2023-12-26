@@ -1,18 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
 import Typography from '@material-ui/core/Typography';
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
-import { redirect } from 'next/navigation';
 
 
 function CriticPage() {
   const {cardItem} = useCard()
   if(!cardItem){
-    // alert("Page not found")
-    // redirect('/')
     return <></>
   }
   return (
