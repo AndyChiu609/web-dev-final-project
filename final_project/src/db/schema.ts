@@ -1,1 +1,2 @@
-export * from './schema/cards.ts'
+export * from './schema/cards'
+export * from './schema/writing'
