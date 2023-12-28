@@ -1,18 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
 import Typography from '@material-ui/core/Typography';
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
-import { redirect } from 'next/navigation';
 
 
 function CriticPage() {
   const {cardItem} = useCard()
   if(!cardItem){
-    // alert("Page not found")
-    // redirect('/')
     return <></>
   }
   return (
@@ -24,7 +20,7 @@ function CriticPage() {
         {cardItem.description}
       </Typography>
       <Link href="/" legacyBehavior>
-      <button className="m-t-4 bgblue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
           Back to Home
       </button>
       </Link>
