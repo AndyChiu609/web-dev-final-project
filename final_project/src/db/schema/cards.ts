@@ -1,4 +1,6 @@
+import { relations } from "drizzle-orm";
 import { date, index, pgTable, serial, uuid, varchar } from "drizzle-orm/pg-core";
+import { writingsTable } from "./writing";
 
 
 export const cardsTable = pgTable("cards",{
@@ -14,3 +16,10 @@ export const cardsTable = pgTable("cards",{
     dateIndex: index("date_index").on(table.date),
 }),
 );
+
+export const cardsRelation = relations(cardsTable, ({one}) => ({
+    cardsWriting: one(writingsTable, {
+        fields: [cardsTable.displayId],
+        references: [writingsTable.cardId]
+    })
+}))

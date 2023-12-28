@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import { pgTable, serial, uuid, varchar } from "drizzle-orm/pg-core";
+import { cardsTable } from "./cards";
 
 export const writingsTable = pgTable("writing",{
     id:serial("id").primaryKey(),
@@ -7,6 +8,7 @@ export const writingsTable = pgTable("writing",{
     rowContent:varchar("rowContent",{length:300}).notNull(),
     unemotionalContent:varchar("aiContent",{length:300}).notNull(),
     writer:varchar("writer",{length: 50}).default("anonymous"),
+    cardId: uuid("card_id").notNull().references(()=>cardsTable.displayId),
 })
 export const writingRelation = relations(writingsTable, ({many}) => ({
     writingComments: many(commentsTable),
