@@ -40,7 +40,7 @@ const CardList: React.FC<CardListProps> = ({ items }) => {
                   {item.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {item.description}
+                  {item.content}
                 </Typography>
               </CardContent>
             </CardActionArea>
