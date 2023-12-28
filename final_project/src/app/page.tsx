@@ -6,18 +6,8 @@ import Modal from '@material-ui/core/Modal';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import CardList from '../component/cardList';
+import { CardItem } from '@/lib/types/db';
 
-
-
-type CardItem = {
-  title: string;
-  description: string;
-  imageUrl: string;
-};
-
-type CardListProps = {
-  items: CardItem[];
-};
 
 
 
@@ -47,7 +37,7 @@ export default function Home() {
 
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setdescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [cards, setCards] = useState<CardItem[]>([]);
   const [refreshFlag, setRefreshFlag] = useState(false); // 新增的狀態
@@ -67,9 +57,9 @@ export default function Home() {
       const response = await fetch('/api/card', { // 替換為您的 API 端點
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content, imageUrl }),
+        body: JSON.stringify({ title, description, imageUrl }),
       });
 
       if (!response.ok) {
@@ -136,8 +126,8 @@ export default function Home() {
             variant="outlined"
             fullWidth
             margin="normal"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            value={description}
+            onChange={(e) => setdescription(e.target.value)}
           />
               <TextField
             label="Image URL"
