@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from "react";
 import { Message } from "@/lib/types/db";
 import TextContent from "./TextContent";
+import { createWriting } from "./action";
 
 export default function Form() {
   const [onType, setOnType] = useState(false);
@@ -26,25 +27,12 @@ export default function Form() {
   })
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setValue('content', '', { shouldValidate: true });
     setContent(data.content);
-    try{
-      setValue('content', '', { shouldValidate: true });
-      const newSubmit: Message[] = [
-        {
-          role: "user",
-          content: `Please give some advices about the article.\n${data.content}`,
-        },
-      ]
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        body: JSON.stringify({
-          messages: newSubmit,
-        })
-      })
-      const newReview = await response.json();
-      setReview(newReview.content);
+    try{ 
+      const newWriting = await createWriting(data.content)
+      setReview(newWriting?.unemotionalContent);
       setOnType(false);
-      
     } catch(error) {
       alert("fail to post comment")
     }
