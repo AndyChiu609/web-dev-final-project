@@ -5,8 +5,8 @@ import { cardsTable } from "./cards";
 export const writingsTable = pgTable("writing",{
     id:serial("id").primaryKey(),
     displayId:uuid("display_id").defaultRandom().notNull().unique(),
-    rowContent:varchar("rowContent",{length:300}).notNull(),
-    unemotionalContent:varchar("aiContent",{length:300}).notNull(),
+    rowContent:varchar("rowContent",{length:300}).notNull().default("Click to Type Something..."),
+    unemotionalContent:varchar("aiContent",{length:300}).notNull().default(""),
     writer:varchar("writer",{length: 50}).default("anonymous"),
     cardId: uuid("card_id").notNull().references(()=>cardsTable.displayId),
 })

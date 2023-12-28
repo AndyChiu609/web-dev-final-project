@@ -4,9 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const POSTWritingsTableSchema = z.object({
-  rowContent: z.string().min(1).max(300),
-  unemotionalContent: z.string().min(1).max(300),
+  rowContent: z.string().min(1).max(300).optional(),
+  unemotionalContent: z.string().min(1).max(300).optional(),
   writer: z.string().optional(),
+  cardId: z.string(),
 })
 type POSTWritingsRequest = z.infer<typeof POSTWritingsTableSchema>;
 
@@ -23,10 +24,11 @@ export async function POST(
   }
 
   // post the new card data
-  const {rowContent, unemotionalContent, writer} = data as POSTWritingsRequest
+  const {rowContent, unemotionalContent, writer, cardId} = data as POSTWritingsRequest
   try {
     const [newCard] = await db.insert(writingsTable).values(
       {
+        cardId,
         rowContent, 
         unemotionalContent,
         writer,

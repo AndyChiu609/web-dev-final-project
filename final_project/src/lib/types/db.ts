@@ -2,6 +2,8 @@ export type CardItem = {
     id: string;
     title: string;
     description: string;
+    rowContent: string;
+    unemotionalContent: string;
     imageUrl?:string;
     date: string;
 }

@@ -3,16 +3,20 @@
 import { useCard } from "@/hooks/useCard";
 import TextInput from "./TextInput"
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from "react";
-import { Message } from "@/lib/types/db";
+import { useEffect, useState } from "react";
 import TextContent from "./TextContent";
-import { createWriting } from "./action";
+import { updateCardContent } from "./action";
 
 export default function Form() {
+  const {cardItemId, cardItem} = useCard();
   const [onType, setOnType] = useState(false);
-  const [content, setContent] = useState("click to type something...");
-  const [review, setReview] = useState(null);
-  const {cardItemId} = useCard();
+  const [content, setContent] = useState(cardItem?.rowContent);
+  const [review, setReview] = useState(cardItem?.unemotionalContent);
+  useEffect(()=> {
+    setContent(cardItem?.rowContent),
+    setReview(cardItem?.unemotionalContent)
+    console.log(cardItem);
+  }, [cardItem])
   const {
     register,
     handleSubmit,
@@ -30,7 +34,7 @@ export default function Form() {
     setValue('content', '', { shouldValidate: true });
     setContent(data.content);
     try{ 
-      const newWriting = await createWriting(data.content)
+      const newWriting = await updateCardContent(cardItemId, data.content)
       setReview(newWriting?.unemotionalContent);
       setOnType(false);
     } catch(error) {
@@ -68,7 +72,7 @@ export default function Form() {
       ):(
         <div>
           <TextContent 
-            content={content}
+            content={(content)?content:"Click to Type Something"}
           />
         </div>
         )

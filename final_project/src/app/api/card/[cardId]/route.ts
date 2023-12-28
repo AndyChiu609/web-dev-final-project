@@ -26,6 +26,8 @@ export async function GET(
             id: dbCard.displayId,
             title: dbCard.title,
             description: dbCard.description,
+            rowContent: dbCard.rowContent,
+            unemotionalContent: dbCard.unemotionalContent,
             imageUrl: dbCard.imageUrl,
             date: dbCard.date,
         }, { status: 200})

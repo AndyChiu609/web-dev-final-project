@@ -8,6 +8,9 @@ export const cardsTable = pgTable("cards",{
     displayId:uuid("display_id").defaultRandom().notNull().unique(),
     title: varchar("title",{length:50}).notNull(),
     description: varchar("description",{length: 300}),
+    rowContent:varchar("rowContent",{length:300}).notNull().default("Click to Type Something..."),
+    unemotionalContent:varchar("aiContent",{length:300}).notNull().default(""),
+    
     imageUrl: varchar("image_url").default("/1280.jpeg"),
     date:date("date").defaultNow(),
 },
