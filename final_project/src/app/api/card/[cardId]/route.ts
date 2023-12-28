@@ -25,7 +25,7 @@ export async function GET(
         return NextResponse.json({
             id: dbCard.displayId,
             title: dbCard.title,
-            content: dbCard.content,
+            description: dbCard.description,
             imageUrl: dbCard.imageUrl,
             date: dbCard.date,
         }, { status: 200})

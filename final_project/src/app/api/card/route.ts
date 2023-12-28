@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const POSTCardsTableSchema = z.object({
   title: z.string().min(1).max(50),
-  content: z.string().min(1).max(300),
+  description: z.string().min(1).max(300),
   imageUrl: z.string().url().optional(),
 })
 type POSTCardsRequest = z.infer<typeof POSTCardsTableSchema>;
@@ -23,19 +23,19 @@ export async function POST(
     }
   
     // post the new card data
-    const {title, content, imageUrl} = data as POSTCardsRequest
+    const {title, description, imageUrl} = data as POSTCardsRequest
     try {
       const [newCard] = await db.insert(cardsTable).values(
         {
           title, 
-          content,
+          description,
           imageUrl,
         }
       ).returning()
       return NextResponse.json({
         id: newCard.displayId,
         title: newCard.title,
-        content: newCard.content,
+        description: newCard.description,
         imageUrl: newCard.imageUrl,
         date: newCard.date,
         }, 
@@ -64,7 +64,7 @@ export async function POST(
             cards: dbCards.map(dbCard => ({
                 id: dbCard.displayId,
                 title: dbCard.title,
-                content: dbCard.content,
+                description: dbCard.description,
                 imageUrl: dbCard.imageUrl,
                 date: dbCard.date,
             }))
