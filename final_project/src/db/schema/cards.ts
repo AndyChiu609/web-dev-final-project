@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import { date, index, pgTable, serial, uuid, varchar } from "drizzle-orm/pg-core";
 import { writingsTable } from "./writing";
+import { commentsTable } from "./comments";
 
 
 export const cardsTable = pgTable("cards",{
@@ -20,9 +21,10 @@ export const cardsTable = pgTable("cards",{
 }),
 );
 
-export const cardsRelation = relations(cardsTable, ({one}) => ({
+export const cardsRelation = relations(cardsTable, ({one, many}) => ({
     cardsWriting: one(writingsTable, {
         fields: [cardsTable.displayId],
         references: [writingsTable.cardId]
-    })
+    }),
+    writingsComments: many(commentsTable),
 }))

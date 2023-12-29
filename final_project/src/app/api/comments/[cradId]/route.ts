@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { writingsTable } from "@/db/schema";
+import { cardsTable} from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,15 +9,15 @@ export async function GET(
         params,
     }: {
         params:{
-            writingId:string;
+            cardId:string;
         }
     },
 ) {
     try {
-        const comments = await db.query.writingsTable.findFirst({
-            where: eq(writingsTable.displayId, params.writingId),
+        const comments = await db.query.cardsTable.findFirst({
+            where: eq(cardsTable.displayId, params.cardId),
             with: {
-                writingComments: true,
+                writingsComments: true,
             }
         });
 
@@ -27,7 +27,7 @@ export async function GET(
         }
 
         return NextResponse.json({
-            comments: comments.writingComments,
+            comments: comments.writingsComments,
         })
     } catch(error) {
         console.log("[api-comments] error: Internal Server Error");
