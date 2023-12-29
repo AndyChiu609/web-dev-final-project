@@ -6,6 +6,7 @@ import { Typography, Button, Card, CardContent, Box, TextField } from '@material
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
 import { CommentItem } from '@/lib/types/db';
+import Header from './_component/Header';
 
 function CriticPage() {
   const { cardItem, cardItemId } = useCard();
@@ -84,6 +85,7 @@ function CriticPage() {
 
   return (
     <Box style={{ padding: '20px' }}>
+      <Header />
       <Typography variant="h4" component="h1" gutterBottom>
         {cardItem.title}
       </Typography>

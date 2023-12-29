@@ -1,3 +1,5 @@
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@material-ui/core'
 import React from 'react'
 type TextContentProps = {
     content:string,
@@ -6,7 +8,7 @@ export default function TextContent({
     content,
 }:TextContentProps) {
   return (
-    <div className="
+    <Card className="
     text-black
     font-light
     rounded-md
@@ -17,6 +19,6 @@ export default function TextContent({
     w-full md:w-3/4
     focus:outline-none
     "
-    >{content}</div>
+    >{content}</Card>
   )
 }
