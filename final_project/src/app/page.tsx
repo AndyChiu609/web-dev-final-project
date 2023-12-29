@@ -35,6 +35,8 @@ function isValidUrl(string: string): boolean {
 
 export default function Home() {
 
+  const [identity, setIdentity] = useState('');
+
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setdescription] = useState('');
@@ -45,6 +47,13 @@ export default function Home() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // 儲存留言身分到 localStorage 的函數
+  const handleIdentityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newIdentity = event.target.value;
+    setIdentity(newIdentity);
+    localStorage.setItem('identity', newIdentity);
+  };
 
   const handleSubmit = async () => {
     // 定义一个默认的图像URL
@@ -103,14 +112,34 @@ export default function Home() {
     fetchCards();
   }, [refreshFlag]);
 
+  useEffect(() => {
+    // 從 localStorage 獲取留言身分，如果不存在則預設為空字符串
+    const savedIdentity = localStorage.getItem('identity') || '';
+    setIdentity(savedIdentity);
+  }, []);
+
   return (
-    <div style={{ textAlign: 'center', margin: '10px' }}>
+    <div style={{ textAlign: 'center', margin: '0 auto',maxWidth: '1200px', padding: '10px' }}>
       <Typography variant="h2" component="h1" gutterBottom>
-        Hate, Constructive Criticism
+        Hate with Gpt
       </Typography>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Create
-      </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+        <Button  variant="contained" color="primary" onClick={handleOpen}>
+          新增黑特
+        </Button>
+        
+        {/* 占位，用于推动文本框向左 */}
+        <Box sx={{ flexGrow: 1 }}></Box>
+        
+        <TextField
+          label="留言身分"
+          variant="outlined"
+          margin="normal"
+          sx={{ maxWidth: '200px' }} // 限制文本框的最大宽度
+          value={identity} // 綁定到 identity 狀態
+          onChange={handleIdentityChange} // 處理變更事件
+        />
+      </Box>
 
       <Modal
         open={open}
@@ -139,7 +168,7 @@ export default function Home() {
             onChange={(e) => setdescription(e.target.value)}
           />
               <TextField
-            label="Put a img url here"
+            label="Put a img url here(or don't, try and find out)"
             variant="outlined"
             fullWidth
             margin="normal"
