@@ -15,11 +15,11 @@ function CriticPage() {
   const [newComment, setNewComment] = useState('');
 
 
-  const handleCommentChange = (event) => {
+  const handleCommentChange = (event:any) => {
     setNewComment(event.target.value);
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event:any) => {
     // 检查是否按下了 Enter 键
     if (event.key === 'Enter') {
       submitComment();
@@ -102,17 +102,6 @@ function CriticPage() {
   return (
     <Box style={{ padding: '20px' }}>
       <Header />
-      <Typography variant="h4" component="h1" gutterBottom>
-        {cardItem.title}
-      </Typography>
-      <Typography variant="body1">
-        {cardItem.description}
-      </Typography>
-      <Link href="/" passHref>
-        <Button variant="contained" style={{ marginTop: '16px', backgroundColor: '#3f51b5', color: 'white' }}>
-          Back to Home
-        </Button>
-      </Link>
       <Form />
 
       <Box style={{ marginTop: '16px' }}>
