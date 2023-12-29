@@ -47,26 +47,25 @@ export default function Home() {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
-    if (imageUrl && !isValidUrl(imageUrl)) {
-      alert('Please enter a valid URL for the image.');
-      return;
-    }
-
-
+    // 定义一个默认的图像URL
+    const defaultImageUrl = "https://i.pinimg.com/736x/ea/67/5a/ea675abc2ff13891bb691a8aa28c230f.jpg"; // 替换为您的默认图像URL
+    // 如果 imageUrl 为空，则使用默认图像URL
+    const finalImageUrl = imageUrl || defaultImageUrl;
+  
     try {
-      const response = await fetch('/api/card', { // 替換為您的 API 端點
+      const response = await fetch('/api/card', { // 替换为您的 API 端点
         method: 'POST',
         headers: {
-          'content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, description, imageUrl }),
+        body: JSON.stringify({ title, description, imageUrl: finalImageUrl }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      // 處理響應數據
+  
+      // 处理响应数据
       const data = await response.json();
       fetch("/api/writing", {
         method: "POST",
@@ -78,13 +77,14 @@ export default function Home() {
         })
       })
       console.log('Response data:', data);
-      handleClose(); // 關閉模態框
+      handleClose(); // 关闭模态框
     } catch (error) {
       console.error('Error:', error);
     }
-
+  
     setRefreshFlag(!refreshFlag);
   };
+  
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -120,10 +120,10 @@ export default function Home() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Modal Title
+            Create Hate 
           </Typography>
           <TextField
-            label="Title"
+            label="Hate Title"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -131,7 +131,7 @@ export default function Home() {
             onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
-            label="Description"
+            label="who is this hater?"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -139,7 +139,7 @@ export default function Home() {
             onChange={(e) => setdescription(e.target.value)}
           />
               <TextField
-            label="Image URL"
+            label="Put a img url here"
             variant="outlined"
             fullWidth
             margin="normal"
