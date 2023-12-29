@@ -7,17 +7,20 @@ export default async function Header() {
     const {cardItem} = useCard();
     return (
     <div className="flex-col justify-itmes-center md:text-center ">
-      <Typography variant="h4" component="h1" gutterBottom>
-        {cardItem?.title}
-      </Typography>
+      <Link href={"/"}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          {cardItem?.title}
+        </Typography>
+      </Link>
       <Typography variant="body1">
-        {cardItem?.description}
+        by {cardItem?.description}
       </Typography>
-      <Link href="/" passHref>
+      {/* <Link href="/" passHref>
         <Button variant="contained" style={{ marginTop: '16px', backgroundColor: '#3f51b5', color: 'white' }}>
           Back to Home
         </Button>
-      </Link>
+      </Link> */}
+      
     </div>
   )
 }

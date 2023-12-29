@@ -76,10 +76,6 @@ function CriticPage() {
   
         const data = await response.json();
         console.log('Response data:', data); // 日誌 3
-
-        data.comments.forEach(comment => {
-          console.log(`Timestamp for comment ${comment.id}:`, comment.timestamp);
-        });
   
         setComments(data.comments); // 假設返回的數據結構中包含一個名為 comments 的字段
       } catch (error) {
