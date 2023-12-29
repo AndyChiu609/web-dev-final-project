@@ -1,14 +1,19 @@
 import { relations } from "drizzle-orm"
 import { writingsTable } from "./writing"
-import { pgTable, serial, uuid, varchar } from "drizzle-orm/pg-core"
+import { index, pgTable, serial, time, timestamp, uuid, varchar } from "drizzle-orm/pg-core"
 import { cardsTable } from "./cards"
 
 export const commentsTable = pgTable("comments",{
     id:serial("id").primaryKey(),
     displayId:uuid("display_id").defaultRandom().notNull().unique(),
+    username: varchar("user",{length: 100}).notNull(),
+    timestmap: timestamp("time").defaultNow(),
     content: varchar("content",{length: 100}).notNull(),
     cardId: uuid("writing_id").notNull(),
-})
+},
+(table) => ({
+    timeIndate: index("time_index").on(table.timestmap),
+}))
 
 export const commentsRelation = relations(commentsTable, ({one}) => ({
     writing: one(cardsTable, {

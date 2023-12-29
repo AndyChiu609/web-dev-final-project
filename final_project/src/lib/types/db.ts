@@ -18,6 +18,8 @@ export type WritingItem = {
 export type CommentItem = {
     id: string;
     content: string;
+    username: string;
+    timestamp: string;
     cardId: string;
 }
 

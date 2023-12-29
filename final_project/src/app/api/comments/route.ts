@@ -6,6 +6,7 @@ import { z } from "zod";
 const POSTCommentsTableSchema = z.object({
   content: z.string().min(1).max(100),
   cardId: z.string(),
+  username: z.string().min(1).max(100),
 })
 type POSTCommentsRequest = z.infer<typeof POSTCommentsTableSchema>;
 
@@ -22,10 +23,11 @@ export async function POST(
   }
 
   // post the new card data
-  const { content, cardId } = data as POSTCommentsRequest;
+  const { username, content, cardId } = data as POSTCommentsRequest;
   try {
     const [newComment] = await db.insert(commentsTable).values(
         {
+        username,
         content,
         cardId,
     }).returning()
