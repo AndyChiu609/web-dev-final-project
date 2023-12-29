@@ -18,6 +18,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        text: "black",
+        text2: "white",
+        button: "blue-600",
+        primary: "#E2E8F0",
+        secondary: "#EDF2F7",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

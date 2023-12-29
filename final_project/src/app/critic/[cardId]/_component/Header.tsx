@@ -1,26 +1,26 @@
-'use client'
-import { useCard } from "@/hooks/useCard"
-import { Button, Typography } from "@material-ui/core";
-import Link from "next/link";
-
-export default async function Header() {
-    const {cardItem} = useCard();
+'use cient'
+import { Typography } from "@material-ui/core";
+type HeaderProps = {
+  title: string,
+  date: string,
+  description: string,
+}
+export default async function Header({
+  title,
+  date,
+  description,
+}: HeaderProps) {
     return (
-    <div className="flex-col justify-itmes-center md:text-center ">
-      <Link href={"/"}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {cardItem?.title}
-        </Typography>
-      </Link>
-      <Typography variant="body1">
-        by {cardItem?.description}
+    <div className="flex-col justify-itmes-center md:text-center m-3">
+      <Typography variant="h4" component="h1" gutterBottom>
+        {title}
       </Typography>
-      {/* <Link href="/" passHref>
-        <Button variant="contained" style={{ marginTop: '16px', backgroundColor: '#3f51b5', color: 'white' }}>
-          Back to Home
-        </Button>
-      </Link> */}
-      
+      <Typography variant="body1">
+        Wrote at : {date}
+      </Typography>
+      <Typography variant="body1">
+        by  {description}
+      </Typography>
     </div>
   )
 }

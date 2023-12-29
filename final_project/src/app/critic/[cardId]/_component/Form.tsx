@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import TextContent from "./TextContent";
 import { updateCardContent } from "./action";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { AlignCenter } from "lucide-react";
 
 export default function Form() {
   const {cardItemId, writingItem} = useCard();
@@ -19,7 +20,7 @@ export default function Form() {
     setContent(writingItem?.rowContent),
     setReview(writingItem?.unemotionalContent)
     console.log(writingItem);
-  }, [writingItem])
+  }, [writingItem]) 
   const {
     register,
     handleSubmit,
@@ -46,7 +47,9 @@ export default function Form() {
   }
 
   return (
-    <div onClick={()=>{(review==="")?setOnType(true):setOnType(false)}}>
+    <div 
+    onClick={()=>{(review==="")?setOnType(true):setOnType(false)}}
+    >
       {(onType)?( 
       <form onSubmit={handleSubmit(onSubmit)}
       className="flex items-center gap-2 lg:gap-4 w-full"
@@ -66,8 +69,9 @@ export default function Form() {
           rounded-md
           bg-blue-600
           cursor-pointer 
-          hover:bg-sky-600 
+          hover:bg-sky-300 
           transition
+          text-white
           "
           >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z"/><path d="M6 12h16"/></svg>
@@ -81,16 +85,16 @@ export default function Form() {
         </div>
         )
         }
-      <div>
+      <div className="flex-col justify-itmes-center">
         <br/>
-      <Typography variant="h5" className="m-3">智慧評論</Typography>
-        <Card key={cardItemId} style={{ marginBottom: '8px' }}>
-          <CardContent>
-            <Typography variant="body1">
-            {review}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Typography variant="h5" className="m-3">智慧評論</Typography>
+          <Card key={cardItemId} style={{ marginBottom: '8px', alignItems:'center' }} className="w-full md:w-3/4">
+            <CardContent className="bg-secondary flex text-text">
+              <Typography variant="body1">
+              {review}
+              </Typography>
+            </CardContent>
+          </Card>
       </div>
     </div>
   )

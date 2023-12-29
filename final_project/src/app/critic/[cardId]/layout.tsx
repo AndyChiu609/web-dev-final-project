@@ -1,3 +1,5 @@
+import Header from "./_component/Header";
+
 type Props = {
     children: React.ReactNode;
     params: { cardId: string };

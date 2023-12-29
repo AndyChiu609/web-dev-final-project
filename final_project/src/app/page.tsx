@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
-import CardList from '../component/cardList';
+import CardList from '@/components/cardList';
 import { CardItem } from '@/lib/types/db';
 
 
@@ -123,7 +123,7 @@ export default function Home() {
 
   return (
     <div style={{ textAlign: 'center', margin: '0 auto',maxWidth: '1200px', padding: '10px' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '16px' }}>
         <Button  variant="contained" color="primary" onClick={handleOpen}>
           新增黑特
         </Button>
@@ -135,7 +135,7 @@ export default function Home() {
           label="留言身分"
           variant="outlined"
           margin="normal"
-          sx={{ maxWidth: '200px' }} // 限制文本框的最大宽度
+          // sx={{ maxWidth: '200px' }} // 限制文本框的最大宽度
           value={identity} // 綁定到 identity 狀態
           onChange={handleIdentityChange} // 處理變更事件
         />

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { Typography, Button, Card, CardContent, Box, TextField } from '@material-ui/core';
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
@@ -88,7 +87,7 @@ function CriticPage() {
     } else {
       console.log('Card ID is not available.'); // 日誌 5
     }
-  }, [cardItemId,refreshComments]);
+  }, [cardItemId, refreshComments]);
 
 
   if (!cardItem) {
@@ -97,9 +96,12 @@ function CriticPage() {
 
   return (
     <Box style={{ padding: '20px' }}>
-      <Header />
+      <Header 
+        title={cardItem.title}
+        date={cardItem.date}
+        description={cardItem.description}
+      />
       <Form />
-
       <Box style={{ marginTop: '16px' }}>
         <Typography variant="h5">評論</Typography>
                 {/* 新增評論輸入區 */}
@@ -115,7 +117,7 @@ function CriticPage() {
                     style={{ marginRight: '8px' }} // 為了在輸入框和按鈕之間添加間距
                   />
                   <Button variant="contained" color="primary" onClick={submitComment}>
-                    確認輸入
+                    Enter
                   </Button>
                 </Box>
         </Box>
@@ -125,7 +127,7 @@ function CriticPage() {
           <>
             {comments.map((comment, index) => (
             <Card key={index} style={{ marginBottom: '8px' }}>
-              <CardContent>
+              <CardContent className="bg-secondary">
               <Typography variant="body1">留言: {comment.content}</Typography>
               {/* 以下假设comment对象中包含timestamp和username字段 */}
               <Typography variant="body2">
