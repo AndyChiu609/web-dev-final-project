@@ -8,6 +8,7 @@ import Form from './_component/Form';
 import { CommentItem } from '@/lib/types/db';
 
 function CriticPage() {
+  const [refreshComments, setRefreshComments] = useState(false);
   const { cardItem, cardItemId } = useCard();
   const [comments, setComments] = useState<CommentItem[]>();
   const [newComment, setNewComment] = useState('');
@@ -17,8 +18,18 @@ function CriticPage() {
     setNewComment(event.target.value);
   };
 
+  const handleKeyPress = (event) => {
+    // 检查是否按下了 Enter 键
+    if (event.key === 'Enter') {
+      submitComment();
+    }
+  };
+
   const submitComment = async () => {
     console.log('Submitted comment:', newComment);
+  
+    // 从 localStorage 获取用户名，如果没有则默认为 "anonymous"
+    const username = localStorage.getItem('identity') || 'anonymous';
   
     try {
       const response = await fetch('/api/comments', {
@@ -27,8 +38,9 @@ function CriticPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          username, // 添加用户名字段
           content: newComment,
-          cardId: cardItemId, // 假設 cardItemId 是當前卡片的ID
+          cardId: cardItemId, // 假设 cardItemId 是当前卡片的ID
         }),
       });
   
@@ -39,14 +51,14 @@ function CriticPage() {
       const data = await response.json();
       console.log('Response data:', data);
   
-      // 更新本地評論列表
+      // 更新本地评论列表
       setComments((prevComments) => [...(prevComments ?? []), data]);
-      setNewComment(''); // 清空輸入框
+      setNewComment(''); // 清空输入框
+      setRefreshComments(!refreshComments);
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
   };
-  
 
   useEffect(() => {
     // 從後端獲取評論的函數
@@ -63,6 +75,10 @@ function CriticPage() {
   
         const data = await response.json();
         console.log('Response data:', data); // 日誌 3
+
+        data.comments.forEach(comment => {
+          console.log(`Timestamp for comment ${comment.id}:`, comment.timestamp);
+        });
   
         setComments(data.comments); // 假設返回的數據結構中包含一個名為 comments 的字段
       } catch (error) {
@@ -75,7 +91,7 @@ function CriticPage() {
     } else {
       console.log('Card ID is not available.'); // 日誌 5
     }
-  }, [cardItemId]);
+  }, [cardItemId,refreshComments]);
 
 
   if (!cardItem) {
@@ -104,10 +120,11 @@ function CriticPage() {
                 <Box style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}>
                   <TextField
                     fullWidth
-                    label="新增評論"
+                    label="點擊輸入按鈕或是按下 Enter 鍵來送出評論"
                     variant="outlined"
                     value={newComment}
                     onChange={handleCommentChange}
+                    onKeyPress={handleKeyPress} // 添加事件处理函数
                     style={{ marginRight: '8px' }} // 為了在輸入框和按鈕之間添加間距
                   />
                   <Button variant="contained" color="primary" onClick={submitComment}>
@@ -122,7 +139,13 @@ function CriticPage() {
             {comments.map((comment, index) => (
             <Card key={index} style={{ marginBottom: '8px' }}>
               <CardContent>
-                <Typography variant="body1">{comment.content}</Typography>
+              <Typography variant="body1">留言: {comment.content}</Typography>
+              {/* 以下假设comment对象中包含timestamp和username字段 */}
+              <Typography variant="body2">
+                時間: {new Date(comment.timestamp).toLocaleString('zh-TW')}
+              </Typography>
+
+              <Typography variant="body2">by: {comment.username}</Typography>
               </CardContent>
             </Card>
             ))}
