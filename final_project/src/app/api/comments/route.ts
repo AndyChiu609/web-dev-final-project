@@ -6,7 +6,7 @@ import { z } from "zod";
 const POSTCommentsTableSchema = z.object({
   content: z.string().min(1).max(100),
   cardId: z.string(),
-  username: z.string().min(1).max(100),
+  username: z.string().min(1).max(100).optional(),
 })
 type POSTCommentsRequest = z.infer<typeof POSTCommentsTableSchema>;
 

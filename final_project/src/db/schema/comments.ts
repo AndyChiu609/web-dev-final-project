@@ -6,7 +6,7 @@ import { cardsTable } from "./cards"
 export const commentsTable = pgTable("comments",{
     id:serial("id").primaryKey(),
     displayId:uuid("display_id").defaultRandom().notNull().unique(),
-    username: varchar("user",{length: 100}).notNull(),
+    username: varchar("user",{length: 100}).notNull().default("anonymous"),
     timestmap: timestamp("time").defaultNow(),
     content: varchar("content",{length: 100}).notNull(),
     cardId: uuid("writing_id").notNull(),
