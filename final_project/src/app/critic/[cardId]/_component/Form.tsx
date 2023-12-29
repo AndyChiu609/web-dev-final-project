@@ -43,7 +43,7 @@ export default function Form() {
   }
 
   return (
-    <div onClick={()=>setOnType(true)}>
+    <div onClick={()=>{(review==="")?setOnType(true):setOnType(false)}}>
       {(onType)?( 
       <form onSubmit={handleSubmit(onSubmit)}
       className="flex items-center gap-2 lg:gap-4 w-full"
