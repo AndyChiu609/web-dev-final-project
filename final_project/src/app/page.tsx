@@ -86,6 +86,9 @@ export default function Home() {
         })
       })
       console.log('Response data:', data);
+      setTitle('');
+      setdescription('');
+      setImageUrl('');
       handleClose(); // 关闭模态框
     } catch (error) {
       console.error('Error:', error);
