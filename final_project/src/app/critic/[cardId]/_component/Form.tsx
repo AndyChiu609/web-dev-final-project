@@ -8,15 +8,15 @@ import TextContent from "./TextContent";
 import { updateCardContent } from "./action";
 
 export default function Form() {
-  const {cardItemId, cardItem} = useCard();
+  const {cardItemId, writingItem} = useCard();
   const [onType, setOnType] = useState(false);
-  const [content, setContent] = useState(cardItem?.rowContent);
-  const [review, setReview] = useState(cardItem?.unemotionalContent);
+  const [content, setContent] = useState(writingItem?.rowContent);
+  const [review, setReview] = useState(writingItem?.unemotionalContent);
   useEffect(()=> {
-    setContent(cardItem?.rowContent),
-    setReview(cardItem?.unemotionalContent)
-    console.log(cardItem);
-  }, [cardItem])
+    setContent(writingItem?.rowContent),
+    setReview(writingItem?.unemotionalContent)
+    console.log(writingItem);
+  }, [writingItem])
   const {
     register,
     handleSubmit,

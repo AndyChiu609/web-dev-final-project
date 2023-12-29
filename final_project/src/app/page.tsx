@@ -68,6 +68,15 @@ export default function Home() {
 
       // 處理響應數據
       const data = await response.json();
+      fetch("/api/writing", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cardId: data.id,
+        })
+      })
       console.log('Response data:', data);
       handleClose(); // 關閉模態框
     } catch (error) {
