@@ -15,15 +15,15 @@ const Header = () => {
                   <Link href="/">
                   <h1
                     className="w-full text-gray-700 md:text-center text-2xl font-semibold">
-                    <p>HatewithGPT</p>
+                    <p>HateWithGPT</p>
                   </h1>
                   </Link>
                   <div className="flex items-center justify-end w-full">
-                      <button className="text-gray-600 focus:outline-none mx-4 sm:mx-0">
-                      <svg className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      </button>
+                      <Link href="/">
+                        <button className="text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </button>
+                      </Link>
   
                       <div className="flex sm:hidden">
                           <button type="button" className="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
