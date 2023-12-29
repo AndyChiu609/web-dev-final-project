@@ -123,9 +123,6 @@ export default function Home() {
 
   return (
     <div style={{ textAlign: 'center', margin: '0 auto',maxWidth: '1200px', padding: '10px' }}>
-      <Typography variant="h2" component="h1" gutterBottom>
-        Hate with Gpt
-      </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
         <Button  variant="contained" color="primary" onClick={handleOpen}>
           新增黑特
