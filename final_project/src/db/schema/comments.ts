@@ -12,7 +12,7 @@ export const commentsTable = pgTable("comments",{
     cardId: uuid("writing_id").notNull(),
 },
 (table) => ({
-    timeIndate: index("time_index").on(table.timestmap),
+    timeIndate: index("time_index").on(table.timestamp),
 }))
 
 export const commentsRelation = relations(commentsTable, ({one}) => ({

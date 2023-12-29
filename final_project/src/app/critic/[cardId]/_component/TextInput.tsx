@@ -1,3 +1,4 @@
+import { Textarea } from "@/components/ui/textarea";
 import { 
   FieldErrors, 
   FieldValues, 
@@ -7,6 +8,7 @@ import {
 interface TextInputProps {
   placeholder?: string;
   id: string;
+  value?:string;
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>,
@@ -16,6 +18,7 @@ interface TextInputProps {
 export default function TextInput({
     placeholder, 
     id, 
+    value,
     type, 
     required, 
     register,
@@ -23,19 +26,20 @@ export default function TextInput({
 ) {
   return (
     <div className="relative w-full">
-      <textarea
+      <Textarea
         id={id}
+        value={value}
         autoComplete={id}
         {...register("content", { required })}
         placeholder={placeholder}
         className="
           text-black
           font-light
+          mt-4 md:mt-8
           py-2
           px-4
           bg-neutral-100 
-          w-full 
-          rounded-full
+          w-full md:w-3/4
           focus:outline-none
         "
       />

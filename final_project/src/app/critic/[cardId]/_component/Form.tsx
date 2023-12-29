@@ -6,12 +6,15 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from "react";
 import TextContent from "./TextContent";
 import { updateCardContent } from "./action";
+import { Card, CardContent, Typography } from "@material-ui/core";
 
 export default function Form() {
   const {cardItemId, writingItem} = useCard();
   const [onType, setOnType] = useState(false);
+  const [isFriendly, setIsfriendly] = useState(false);
   const [content, setContent] = useState(writingItem?.rowContent);
   const [review, setReview] = useState(writingItem?.unemotionalContent);
+  
   useEffect(()=> {
     setContent(writingItem?.rowContent),
     setReview(writingItem?.unemotionalContent)
@@ -34,9 +37,9 @@ export default function Form() {
     setValue('content', '', { shouldValidate: true });
     setContent(data.content);
     try{ 
+      setOnType(false);
       const newWriting = await updateCardContent(cardItemId, data.content)
       setReview(newWriting?.unemotionalContent);
-      setOnType(false);
     } catch(error) {
       alert("fail to post comment")
     }
@@ -58,9 +61,10 @@ export default function Form() {
       <button 
           type="submit" 
           className="
-          rounded-full 
-          p-2 
-          bg-sky-500 
+          p-2
+          m-2 
+          rounded-md
+          bg-blue-600
           cursor-pointer 
           hover:bg-sky-600 
           transition
@@ -78,7 +82,15 @@ export default function Form() {
         )
         }
       <div>
-        Review:<br/>{review}
+        <br/>
+      <Typography variant="h5" className="m-3">智慧評論</Typography>
+        <Card key={cardItemId} style={{ marginBottom: '8px' }}>
+          <CardContent>
+            <Typography variant="body1">
+            {review}
+            </Typography>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
