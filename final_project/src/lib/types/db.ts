@@ -15,6 +15,12 @@ export type WritingItem = {
     writer?: string;
 }
 
+export type CommentItem = {
+    id: string;
+    content: string;
+    cardId: string;
+}
+
 export type Message = {
     role: "user"| "system"| "assistant";
     content: string| null;

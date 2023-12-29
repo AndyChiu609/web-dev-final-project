@@ -5,19 +5,24 @@ import Link from 'next/link';
 import { Typography, Button, Card, CardContent, Box } from '@material-ui/core';
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
+import { CommentItem } from '@/lib/types/db';
 
 function CriticPage() {
-  const { cardItem } = useCard();
-  const [comments, setComments] = useState([]);
+  const { cardItem, cardItemId } = useCard();
+  const [comments, setComments] = useState<CommentItem[]>();
 
   useEffect(() => {
     // 在這裡模擬從後端獲取評論的行為
-    const mockComments = [
-      { content: "這是一個很有見地的文章！", writingId: cardItem?.id },
-      { content: "我非常同意作者的觀點。", writingId: cardItem?.id }
-    ];
-    setComments(mockComments);
-  }, [cardItem]);
+    const fetchCard =async () => {
+      const res = await fetch(`/api/comments/${cardItemId}`);
+      if (!res.ok) {
+        return;
+      }
+      const data = await res.json();
+      setComments(data.comment);
+    };
+    fetchCard();
+  }, [cardItem, cardItemId]);
 
   if (!cardItem) {
     return <></>;
@@ -40,13 +45,19 @@ function CriticPage() {
 
       <Box style={{ marginTop: '16px' }}>
         <Typography variant="h5">評論</Typography>
-        {comments.map((comment, index) => (
-          <Card key={index} style={{ marginBottom: '8px' }}>
-            <CardContent>
-              <Typography variant="body1">{comment.content}</Typography>
-            </CardContent>
-          </Card>
-        ))}
+        {(!comments)?(
+          <></>
+        ):(
+          <>
+            {comments.map((comment, index) => (
+            <Card key={index} style={{ marginBottom: '8px' }}>
+              <CardContent>
+                <Typography variant="body1">{comment.content}</Typography>
+              </CardContent>
+            </Card>
+            ))}
+          </>
+        )}
       </Box>
     </Box>
   );
