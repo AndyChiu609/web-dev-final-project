@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Typography, Button, Card, CardContent, Box, TextField } from '@material-ui/core';
 import { useCard } from '@/hooks/useCard';
 import Form from './_component/Form';
@@ -11,12 +11,7 @@ function CriticPage() {
   const [refreshComments, setRefreshComments] = useState(false);
   const { cardItem, cardItemId } = useCard();
   const [comments, setComments] = useState<CommentItem[]>();
-  const [newComment, setNewComment] = useState('');
-
-
-  const handleCommentChange = (event:any) => {
-    setNewComment(event.target.value);
-  };
+  let newCommenRef = useRef<HTMLInputElement>(null);
 
   const handleKeyPress = (event:any) => {
     // 检查是否按下了 Enter 键
@@ -26,11 +21,8 @@ function CriticPage() {
   };
 
   const submitComment = async () => {
-    console.log('Submitted comment:', newComment);
-  
     // 从 localStorage 获取用户名，如果没有则默认为 "anonymous"
     const username = localStorage.getItem('identity') || 'anonymous';
-  
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
@@ -39,7 +31,7 @@ function CriticPage() {
         },
         body: JSON.stringify({
           username, // 添加用户名字段
-          content: newComment,
+          content: newCommenRef.current?.value,
           cardId: cardItemId, // 假设 cardItemId 是当前卡片的ID
         }),
       });
@@ -53,7 +45,6 @@ function CriticPage() {
   
       // 更新本地评论列表
       setComments((prevComments) => [...(prevComments ?? []), data]);
-      setNewComment(''); // 清空输入框
       setRefreshComments(!refreshComments);
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -62,11 +53,11 @@ function CriticPage() {
 
   useEffect(() => {
     // 從後端獲取評論的函數
-    const fetchComments = async () => {
-      console.log(`Fetching comments for card ID: ${cardItemId}`); // 日誌 1
+    const fetchComments = async (cardId:string) => {
+      console.log(`Fetching comments for card ID: ${cardId}`); // 日誌 1
   
       try {
-        const response = await fetch(`/api/comments/${cardItemId}`);
+        const response = await fetch(`/api/comments/${cardId}`);
         console.log('Response received:', response); // 日誌 2
   
         if (!response.ok) {
@@ -75,18 +66,16 @@ function CriticPage() {
   
         const data = await response.json();
         console.log('Response data:', data); // 日誌 3
-  
+        if (newCommenRef.current) {
+          newCommenRef.current.value = "";
+        }
         setComments(data.comments); // 假設返回的數據結構中包含一個名為 comments 的字段
       } catch (error) {
         console.error('Error fetching comments:', error); // 日誌 4
       }
     };
   
-    if (cardItemId) {
-      fetchComments();
-    } else {
-      console.log('Card ID is not available.'); // 日誌 5
-    }
+    fetchComments(cardItemId);
   }, [cardItemId, refreshComments]);
 
 
@@ -106,23 +95,26 @@ function CriticPage() {
         <Typography variant="h5">評論</Typography>
                 {/* 新增評論輸入區 */}
                 <Box style={{ marginTop: '16px' }}>
-                <Box style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}>
-                  <TextField
-                    fullWidth
-                    label="點擊輸入按鈕或是按下 Enter 鍵來送出評論"
-                    variant="outlined"
-                    value={newComment}
-                    onChange={handleCommentChange}
-                    onKeyPress={handleKeyPress} // 添加事件处理函数
+                <div className="flex justify-center m-4">
+                  <input
+                    className="w-full"
+                    placeholder="點擊輸入按鈕或是按下 Enter 鍵來送出評論"
+                    // variant="outlined"
+                    ref={newCommenRef}
+                    onKeyPress={(e)=>{handleKeyPress(e)}} // 添加事件处理函数
                     style={{ marginRight: '8px' }} // 為了在輸入框和按鈕之間添加間距
                   />
                   <Button variant="contained" color="primary" onClick={submitComment}>
                     Enter
                   </Button>
-                </Box>
+                </div>
         </Box>
         {(!comments)?(
-          <></>
+          <>
+          <div className="flex justify-center">
+            <h4>留言搶頭香</h4>
+          </div>
+          </>
         ):(
           <>
             {comments.map((comment, index) => (

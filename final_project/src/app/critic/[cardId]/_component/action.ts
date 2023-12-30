@@ -7,7 +7,7 @@ export const updateCardContent = async (
   const newSubmit: Message[] = [
     {
       role: "user",
-      content: `Please give some advices in 50 words about the article and reply with the same language as following text.\n${rowContent}`,
+      content: `Please give some gentle advices in 50 words about the article and reply with the same language as following text.\n${rowContent}`,
     },
   ]
 // fetch the response from openAI
