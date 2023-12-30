@@ -120,13 +120,13 @@ function CriticPage() {
             {comments.map((comment, index) => (
             <Card key={index} style={{ marginBottom: '8px' }}>
               <CardContent className="bg-secondary">
-              <Typography variant="body1">留言: {comment.content}</Typography>
+              <Typography variant="body1" component="div">留言: {comment.content}</Typography>
               {/* 以下假设comment对象中包含timestamp和username字段 */}
-              <Typography variant="body2">
+              <Typography variant="body2" component="div">
                 時間: {new Date(comment.timestamp).toLocaleString('zh-TW')}
               </Typography>
 
-              <Typography variant="body2">by: {comment.username}</Typography>
+              <Typography variant="body2" component="div">by: {comment.username}</Typography>
               </CardContent>
             </Card>
             ))}

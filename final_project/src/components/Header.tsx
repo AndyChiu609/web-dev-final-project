@@ -15,7 +15,7 @@ const Header = () => {
                   <Link href="/">
                   <h1
                     className="w-full text-gray-800 md:text-center text-2xl font-semibold">
-                    <p>HateWithGPT</p>
+                    HateWithGPT
                   </h1>
                   </Link>
                   <div className="flex items-center justify-end w-full">

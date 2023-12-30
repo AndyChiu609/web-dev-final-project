@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import CardList from '@/components/cardList';
 import { CardItem } from '@/lib/types/db';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -43,7 +44,7 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
   const [cards, setCards] = useState<CardItem[]>([]);
   const [refreshFlag, setRefreshFlag] = useState(false); // 新增的狀態
-
+  const router = useRouter();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -85,6 +86,7 @@ export default function Home() {
           cardId: data.id,
         })
       })
+      router.push(`/critic/${data.id}`)
       console.log('Response data:', data);
       setTitle('');
       setdescription('');
@@ -93,7 +95,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error:', error);
     }
-  
+    
     setRefreshFlag(!refreshFlag);
   };
   

@@ -1,11 +1,10 @@
-'use cient'
 import { Typography } from "@material-ui/core";
 type HeaderProps = {
   title: string,
   date: string,
   description: string,
 }
-export default async function Header({
+export default function Header({
   title,
   date,
   description,
@@ -15,10 +14,10 @@ export default async function Header({
       <Typography variant="h4" component="h1">
         {title}
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" component="div">
         Wrote at : {date}
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" component="div">
         by  {description}
       </Typography>
     </div>

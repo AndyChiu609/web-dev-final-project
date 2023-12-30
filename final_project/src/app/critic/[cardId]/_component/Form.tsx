@@ -87,10 +87,10 @@ export default function Form() {
         }
       <div className="flex-col justify-itmes-center">
         <br/>
-        <Typography variant="h5" className="m-3">你得到的評論</Typography>
+        <Typography variant="h5" className="m-3" component="div">你得到的評論</Typography>
           <Card key={cardItemId} style={{ marginBottom: '8px', alignItems:'center' }} className="w-full md:w-3/4">
             <CardContent className="bg-secondary flex text-text">
-              <Typography variant="body1">
+              <Typography variant="body1" component="div">
               {review}
               </Typography>
             </CardContent>
