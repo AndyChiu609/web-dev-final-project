@@ -12,7 +12,7 @@ export default async function Header({
 }: HeaderProps) {
     return (
     <div className="flex-col justify-itmes-center md:text-center m-3">
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h4" component="h1">
         {title}
       </Typography>
       <Typography variant="body1">

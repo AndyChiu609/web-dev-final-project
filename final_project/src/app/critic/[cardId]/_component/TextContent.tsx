@@ -9,7 +9,7 @@ export default function TextContent({
   return (
       <div className="flex items-center justify-items-center">
         <Card className="
-        text-black
+        text-text
         font-light
         rounded-md
         mt-4 md:mt-8
